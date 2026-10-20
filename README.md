@@ -5,7 +5,7 @@ Proyecto para la presentacion y almacenamiento de los datos proporcionados por A
  
  Para ejecutarlo:   
 `git clone https://github.com/Harico04/tarea_docker.git`   
-`cd proyecto_tarea`   
+`cd tarea_docker`   
 
 Se requerira un .env con el siguiente formato:   
 POSTGRES_USER=admin   
