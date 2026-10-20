@@ -14,5 +14,6 @@ POSTGRES_DB=imagenes_nasa
 
 Finalmente:
 `docker compose up --build -d`   
+La aplicacion estara disponible en `localhost:8050`  
 
 ![Captura del dashboard](docs/dashboard.jpeg)
