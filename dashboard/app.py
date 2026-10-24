@@ -146,7 +146,11 @@ def dia_vacio(titulo: str, detalle: str, es_hoy: bool = False):
         html.P(detalle, className="autor"),
     ]
     return html.Article(
-        className="dia dia--vacio", children=html.Section(className="ficha", children=ficha)
+        className="dia dia--vacio",
+        children=html.Div(
+            className="bloque bloque--ficha",
+            children=html.Section(className="ficha", children=ficha),
+        ),
     )
 
 
@@ -165,8 +169,14 @@ def vista_dia(fila, es_hoy: bool = False):
     return html.Article(
         className="dia",
         children=[
-            html.Figure(className="marco", children=html.Img(src=url, alt=alt)),
-            html.Section(className="ficha", children=ficha),
+            html.Div(
+                className="bloque bloque--imagen",
+                children=html.Figure(className="marco", children=html.Img(src=url, alt=alt)),
+            ),
+            html.Div(
+                className="bloque bloque--ficha",
+                children=html.Section(className="ficha", children=ficha),
+            ),
         ],
     )
 
@@ -179,35 +189,46 @@ def campo(etiqueta: str, id_: str, ejemplo: str, minimo: int, maximo: int):
             dcc.Input(
                 id=id_, type="number", min=minimo, max=maximo, step=1,
                 placeholder=ejemplo, autoComplete="off", n_submit=0,
+                style={"fontFamily": "inherit"},
             ),
         ],
     )
 
 
-app = Dash(__name__, title="Imagen del día")
+app = Dash(
+    __name__,
+    title="Imagen del día",
+    external_stylesheets=[
+        "https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    ],
+)
 server = app.server  # para gunicorn
 
 app.layout = html.Div(
-    [
-        html.Header(
-            className="buscador",
-            children=[
-                html.Div(
-                    className="buscador__campos",
-                    children=[
-                        campo("Día", "dia", "DD", 1, 31),
-                        campo("Mes", "mes", "MM", 1, 12),
-                        campo("Año", "anio", "AAAA", 1, 9999),
-                    ],
-                ),
-            ],
+    style={"fontFamily": "'Inter', system-ui, sans-serif"},
+    children=[
+        html.Div(
+            className="seccion seccion--buscador",
+            children=html.Header(
+                className="buscador",
+                children=[
+                    html.Div(
+                        className="buscador__campos",
+                        children=[
+                            campo("Día", "dia", "DD", 1, 31),
+                            campo("Mes", "mes", "MM", 1, 12),
+                            campo("Año", "anio", "AAAA", 1, 9999),
+                        ],
+                    ),
+                ],
+            ),
         ),
-        html.Div(id="contenido"),
+        html.Div(className="seccion seccion--contenido", children=html.Div(id="contenido")),
         dcc.Store(id="fecha-elegida"),  # None = hoy; "invalida" = fecha incorrecta
         # Vuelve a consultar cada minuto: recoge los datos en cuanto el
         # recolector los inserta y cambia de día al pasar la medianoche.
         dcc.Interval(id="refresco", interval=60_000),
-    ]
+    ],
 )
 
 

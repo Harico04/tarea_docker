@@ -1,0 +1,165 @@
+:root {
+  --fondo: #f5f5f7;
+  --tarjeta: #ffffff;
+  --texto: #1d1d1f;
+  --texto-suave: #6e6e73;
+  --borde: #e0e0e5;
+  --acento: #3b5bdb;
+  --radio: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fondo: #121214;
+    --tarjeta: #1c1c1f;
+    --texto: #f2f2f4;
+    --texto-suave: #a0a0a8;
+    --borde: #2e2e33;
+    --acento: #748ffc;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: "Inter", system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+/* ---------- Secciones ---------- */
+
+.seccion {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+}
+
+/* ---------- Buscador ---------- */
+
+.buscador {
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 1rem 1.25rem;
+}
+
+.buscador__campos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1 1 90px;
+}
+
+.campo label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--texto-suave);
+}
+
+.campo input {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  font-size: 1rem;
+  color: var(--texto);
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+}
+
+.campo input:focus {
+  outline: 2px solid var(--acento);
+  outline-offset: 1px;
+}
+
+/* ---------- Día ---------- */
+
+.lista {
+  display: block;
+}
+
+.dia {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.bloque {
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  overflow: hidden;
+}
+
+.marco {
+  margin: 0;
+}
+
+.marco img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.bloque--ficha {
+  padding: 1.25rem 1.5rem;
+}
+
+.ficha .fecha {
+  margin: 0 0 0.25rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.ficha .autor {
+  margin: 0 0 1rem;
+  color: var(--texto-suave);
+  font-size: 0.95rem;
+}
+
+.ficha .autor p {
+  margin: 0;
+}
+
+.ficha .descripcion a,
+.ficha .autor a {
+  color: var(--acento);
+}
+
+.ficha .descripcion p {
+  margin: 0 0 0.75rem;
+}
+
+/* Día sin registro */
+
+.dia--vacio .bloque--ficha {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+}
+
+/* ---------- Pantallas grandes: imagen y ficha lado a lado ---------- */
+
+@media (min-width: 800px) {
+  .dia:not(.dia--vacio) {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .bloque--imagen {
+    flex: 3;
+  }
+
+  .bloque--ficha {
+    flex: 2;
+  }
+}
